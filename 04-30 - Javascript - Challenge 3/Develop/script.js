@@ -36,3 +36,14 @@ console.log(upperCase())
 console.log(numbers())
 console.log(symbols())
 console.log(lowerCase())
+
+const lowercaseEl = document.getElementById('lowercase')
+const uppercaseEl = document.getElementById('uppercase')
+const numberEl = document.getElementById('number')
+const symbolEl = document.getElementById('symbol')
+const hasUpper = uppercaseEl.checked
+const hasLower = uppercaseEl.checked
+const hasNumber = uppercaseEl.checked
+const hasSymbol = uppercaseEl.checked
+
+console.log(hasUpper, hasLower, hasNumber, hasSymbol)
