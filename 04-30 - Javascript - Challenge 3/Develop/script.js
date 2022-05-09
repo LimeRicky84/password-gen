@@ -3,20 +3,35 @@ var lowercaseEl = document.getElementById("lowercase")
 var uppercaseEl = document.getElementById('uppercase')
 var numberEl = document.getElementById('number')
 var symbolEl = document.getElementById('symbol')
-var lower = randLowerCase
-var upper = randUpperCase
-var number = randNumbers
-var symbol = randSymbols
-var randomize ={ 
-  lower, upper, number, symbol
-}
+
+var randomize = [
+randLowerCase,
+randUpperCase,
+randNumbers,
+randSymbols,
+]
+
+let i = 0; 
+
+do {
+  if (i === randomize.length - 1) {
+    console.log(randLowerCase())
+  }  
+  i++;
+} while (i< lengthEl.value)
+  
+
+  // call the function
+  
+  console.log(lengthEl.value)
+
 
 var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword(length, hasUpper, hasLower, hasNumber, hasSymbol) {
 
-  var length = +lengthEl.value
+  var passLength = +lengthEl.value
   var hasUpper = uppercaseEl.checked
   var hasLower = lowercaseEl.checked
   var hasNumber = numberEl.checked
@@ -24,28 +39,31 @@ function writePassword(length, hasUpper, hasLower, hasNumber, hasSymbol) {
   // var password = generatePassword(typesInput, typesArray);
   // var passwordText = document.querySelector("#password");
   
-  console.log(length, hasUpper, hasLower, hasNumber, hasSymbol)
+  console.log(passLength, hasUpper, hasLower, hasNumber, hasSymbol)
   // passwordText.value = password;
 
   let generatedPassword = ""
 
-  var typesInput = lower + upper + number + symbol; 
-  var typesArray = [{lower}, {upper}, {number}, {symbol}].filter(item => Object.values(item)[0])
+  // var typesInput = lower + upper + number + symbol; 
+  var typesArray = [{hasLower}, {hasUpper}, {hasNumber}, {hasSymbol}].filter(item => Object.values(item)[0])
 
-  if(typesInput ===0){
-    return '';
+  if(typesArray ===0){
+    return 'No Password. Check one or more boxes';
   }
 
-  for(let i=0; i<length;
-    i+=typesInput) {
-      typesArray.forEach(type => {const funcName = Object.keys(type)[0];
+  for(let i=0; i < length; i+=typesInput) {
+      typesArray.forEach(type => {
+        const funcName = Object.keys(type)[0];
         generatedPassword += randomize[funcName]();
+        
       });
     
     var finalPassword = generatedPassword.slice(length)
     return finalPassword
   }
-} console.log(finalPassword)
+
+  // console.log(generatedPassword)
+} 
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
@@ -68,10 +86,7 @@ function randSymbols(){
   return symbols[Math.floor(Math.random() * symbols.length)]
 }
 
-console.log(randLowerCase())
-console.log(randUpperCase())
-console.log(randNumbers())
-console.log(randSymbols())
+
 
 
 
