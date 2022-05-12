@@ -3,90 +3,51 @@ var lowercaseEl = document.getElementById("lowercase")
 var uppercaseEl = document.getElementById('uppercase')
 var numberEl = document.getElementById('number')
 var symbolEl = document.getElementById('symbol')
+var newPassword = document.getElementById('password')
+var passLength = +lengthEl.value
+var hasUpper = uppercaseEl.checked
+var hasLower = lowercaseEl.checked
+var hasNumber = numberEl.checked
+var hasSymbol = symbolEl.checked
 
-var randomize = [
-randLowerCase,
-randUpperCase,
-randNumbers,
-randSymbols,
-]
+const characterCodes = Array.from(Array(26)).map( (_, i) => i +97);
 
-let i = 0; 
+const randLowerCase = characterCodes.map(code => String.fromCharCode(code))
+const randUpperCase = randLowerCase.map(letter => letter.toUpperCase())
+const randNumbers = [1,2,3,4,5,6,7,8,9,0]
+const randSymbols = ['!','@','#','$','%','&','*']
 
-do {
-  if (i === randomize.length - 1) {
-    console.log(randLowerCase())
-  }  
-  i++;
-} while (i< lengthEl.value)
-  
-
-  // call the function
-  
-  console.log(lengthEl.value)
-
+console.log(passLength, hasUpper, hasLower, hasNumber, hasSymbol)  
+console.log(randLowerCase, randUpperCase, randSymbols, randNumbers)
 
 var generateBtn = document.querySelector("#generate");
 
-// Write password to the #password input
-function writePassword(length, hasUpper, hasLower, hasNumber, hasSymbol) {
-
-  var passLength = +lengthEl.value
-  var hasUpper = uppercaseEl.checked
-  var hasLower = lowercaseEl.checked
-  var hasNumber = numberEl.checked
-  var hasSymbol = symbolEl.checked
-  // var password = generatePassword(typesInput, typesArray);
-  // var passwordText = document.querySelector("#password");
+function generatePassword(){
   
-  console.log(passLength, hasUpper, hasLower, hasNumber, hasSymbol)
-  // passwordText.value = password;
+  const availableChars = [
+    ...(hasLower ? randLowerCase : []),
+    ...(hasUpper ? randUpperCase : []),
+    ...(hasNumber ? randNumbers : []),
+    ...(hasSymbol ? randSymbols : []),
+  ];
+  
+  // console.log(availableChars)
+  
+    generatePassword(passLength, hasUpper, hasLower, hasNumber, hasSymbol)
+  let password = ""
 
-  let generatedPassword = ""
-
-  // var typesInput = lower + upper + number + symbol; 
-  var typesArray = [{hasLower}, {hasUpper}, {hasNumber}, {hasSymbol}].filter(item => Object.values(item)[0])
-
-  if(typesArray ===0){
-    return 'No Password. Check one or more boxes';
-  }
-
-  for(let i=0; i < length; i+=typesInput) {
-      typesArray.forEach(type => {
-        const funcName = Object.keys(type)[0];
-        generatedPassword += randomize[funcName]();
-        
-      });
-    
-    var finalPassword = generatedPassword.slice(length)
-    return finalPassword
-  }
-
-  // console.log(generatedPassword)
-} 
-
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
-
-
-function randLowerCase(){
-  return String.fromCharCode(Math.floor(Math.random() * 26) + 97)
+  // if(availableChars.passLength ===0){
+  // return 'No Password. Check one or more boxes';
+  // }
+  
+  for(let i=0; i < passLength; i++) {
+  var mathIndex = Math.floor(Math.random() * generatePassword.passLength)
+  finalPassword += availableChars[mathIndex]
+  }; 
+  return password
 }
 
-function randUpperCase(){
-  return String.fromCharCode(Math.floor(Math.random() * 26) + 65)
-}
-
-function randNumbers(){
-  return String.fromCharCode(Math.floor(Math.random() * 10) + 48)
-}
-
-function randSymbols(){
-  const symbols = '!@#$%^&*'
-  return symbols[Math.floor(Math.random() * symbols.length)]
-}
-
-
-
-
-
+generateBtn.addEventListener('click', function() {
+  var newPassword = generatePassword(passLength)
+  newPassword.text(newPassword)
+})
