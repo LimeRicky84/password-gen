@@ -3,10 +3,9 @@ var lowercaseEl = document.getElementById("lowercase")
 var uppercaseEl = document.getElementById('uppercase')
 var numberEl = document.getElementById('number')
 var symbolEl = document.getElementById('symbol')
-var newPassword = document.getElementById('password')
+var passDisplayEl = document.getElementById('password')
 var passLength = +lengthEl.value
 var hasUpper = uppercaseEl.checked
-var hasLower = lowercaseEl.checked
 var hasNumber = numberEl.checked
 var hasSymbol = symbolEl.checked
 
@@ -17,37 +16,30 @@ const randUpperCase = randLowerCase.map(letter => letter.toUpperCase())
 const randNumbers = [1,2,3,4,5,6,7,8,9,0]
 const randSymbols = ['!','@','#','$','%','&','*']
 
-console.log(passLength, hasUpper, hasLower, hasNumber, hasSymbol)  
-console.log(randLowerCase, randUpperCase, randSymbols, randNumbers)
+// console.log(passLength, hasUpper, hasNumber, hasSymbol)  
+// console.log(randLowerCase, randUpperCase, randSymbols, randNumbers)
 
 var generateBtn = document.querySelector("#generate");
 
-function generatePassword(){
-  
-  const availableChars = [
-    ...(hasLower ? randLowerCase : []),
-    ...(hasUpper ? randUpperCase : []),
-    ...(hasNumber ? randNumbers : []),
-    ...(hasSymbol ? randSymbols : []),
-  ];
-  
-  // console.log(availableChars)
-  
-    generatePassword(passLength, hasUpper, hasLower, hasNumber, hasSymbol)
-  let password = ""
+function generatePassword(passLength, hasUpper, hasNumber, hasSymbol){
 
-  // if(availableChars.passLength ===0){
-  // return 'No Password. Check one or more boxes';
-  // }
+  var password = ""
+
+  let availableChars = randLowerCase
+  if (hasUpper) availableChars = availableChars.concat(randUpperCase);
+  if (hasNumber) availableChars = availableChars.concat(randNumbers);
+  if (hasSymbol) availableChars = availableChars.concat(randSymbols);
   
-  for(let i=0; i < passLength; i++) {
-  var mathIndex = Math.floor(Math.random() * generatePassword.passLength)
-  finalPassword += availableChars[mathIndex]
+  
+  for(let i=0; i < passLength; i++){
+  var mathIndex = availableChars[Math.floor(Math.random() * passLength)]
+  password = availableChars[mathIndex];
   }; 
-  return password
+  return password;
 }
-
-generateBtn.addEventListener('click', function() {
-  var newPassword = generatePassword(passLength)
-  newPassword.text(newPassword)
-})
+console.log(generatePassword())
+generateBtn.addEventListener('click', (Event) => {
+    Event.preventDefault()
+    var finalPassword = generatePassword(passLength.value)
+    passDisplayEl.innerText = finalPassword
+  })
