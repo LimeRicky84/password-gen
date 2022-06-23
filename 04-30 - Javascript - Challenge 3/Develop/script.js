@@ -1,7 +1,7 @@
 var lengthEl = document.getElementById('pword')
 
 var passDisplayEl = document.getElementById('password')
-let passLength = lengthEl.value
+
 
 const characterCodes = Array.from(Array(26)).map( (_, i) => i +97);
 
@@ -21,7 +21,7 @@ function generatePassword(){
   const hasSymbol = document.getElementById('symbol').checked
   let passLength = lengthEl.value
   console.log(passLength)
-  var finalPassword = ""
+  var generatedPassword = ""
 
   let availableChars = []
   availableChars = availableChars.concat(randLowerCase)
@@ -38,11 +38,13 @@ function generatePassword(){
   console.log(passLength, hasUpper, hasNumber, hasSymbol)
   console.log(availableChars)
   for(let i=0; i < passLength; i++){
-    let finalPassword = availableChars[Math.floor(Math.random() * availableChars.length)]
+    let generatedPassword = availableChars[Math.floor(Math.random() * availableChars.length)]
     
-    console.log(finalPassword)
-    passDisplayEl.innerHTML = finalPassword
-  }; return 
+    console.log(generatedPassword)
+    let finalPassword = generatedPassword.slice(0,passLength)
+    // console.log(finalPassword)
+    passDisplayEl.innerText = finalPassword
+  }; return  
   // console.log(finalPassword)
   passDisplayEl.innerText = finalPassword
   
